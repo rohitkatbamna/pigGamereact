@@ -10,9 +10,8 @@ function App() {
 	const [playnum, setPlaynum] = useState(1);
 	const [playwin, setPlaywin] = useState("");
 	const [disable, setDisable] = useState(false);
-	console.log(diceroll);
 
-	function rollThedice() {
+	function checkwin() {
 		if (playerone >= 10) {
 			setPlaywin(" Player One Wins");
 			setDisable(true);
@@ -21,6 +20,9 @@ function App() {
 			setPlaywin("Player Two Wins");
 			setDisable(true);
 		}
+	}
+	function rollThedice() {
+		checkwin();
 		randomNumber = Math.floor(Math.random() * 6) + 1;
 		setDiceroll(randomNumber);
 		if (playnum === 1) {
@@ -47,20 +49,24 @@ function App() {
 		}
 	}
 	function onHold() {
-		if (playerone >= 10) {
-			setPlaywin(" Player One Wins");
-			setDisable(true);
-		}
-		if (playertwo >= 10) {
-			setPlaywin("Player Two Wins");
-			setDisable(true);
-		}
+		checkwin();
 		setPlaynum(playnum === 1 ? 2 : 1);
 		setPlayerone((prev) => prev + currentone);
 		setCurrentone(0);
 		setPlayertwo((prev) => prev + currenttwo);
 		setCurrenttwo(0);
 		setPlayer(player ? false : true);
+	}
+	function newgame() {
+		setPlayerone(0);
+		setPlayertwo(0);
+		setCurrentone(0);
+		setCurrenttwo(0);
+		setDiceroll(Math.floor(Math.random() * 6) + 1);
+		setPlayer(true);
+		setPlaynum(1);
+		setPlaywin("");
+		setDisable(false);
 	}
 
 	return (
@@ -71,8 +77,9 @@ function App() {
 				<div className="row text-center">
 					<button
 						type="button"
-						className="btn btn-dark btn-lg col-4 ms-auto me-auto mt-5 mb-5">
-						Start The game
+						className="btn btn-dark btn-lg col-4 ms-auto me-auto mt-5 mb-5"
+						onClick={newgame}>
+						Start New game
 					</button>
 				</div>
 				<div className="row text-center">
