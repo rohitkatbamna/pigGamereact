@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-let randomNumber = Math.floor(Math.random() * 6) + 1;
+let randomNumber;
+function rngenerator() {
+	randomNumber = Math.floor(Math.random() * 6) + 1;
+}
 function App() {
 	const [playerone, setPlayerone] = useState(0);
 	const [playertwo, setPlayertwo] = useState(0);
-	const [diceroll, setDiceroll] = useState(randomNumber);
+	const [diceroll, setDiceroll] = useState(0);
 	const [player, setPlayer] = useState(true);
 	const [currentone, setCurrentone] = useState(0);
 	const [currenttwo, setCurrenttwo] = useState(0);
@@ -11,20 +14,18 @@ function App() {
 	const [playwin, setPlaywin] = useState("");
 	const [disable, setDisable] = useState(false);
 
-	function checkwin() {
-		if (playerone + currentone >= 10 || currentone >= 10) {
+	function rollThedice() {
+		if (playerone >= 10) {
 			setPlaywin(" Player One Wins");
 			setDisable(true);
+			return;
 		}
-		if (playertwo + currenttwo >= 10 || currenttwo >= 10) {
+		if (playertwo >= 10) {
 			setPlaywin("Player Two Wins");
 			setDisable(true);
+			return;
 		}
-	}
-	function rollThedice() {
-		checkwin();
-		randomNumber = Math.floor(Math.random() * 6) + 1;
-		setDiceroll(randomNumber);
+		rngenerator();
 		if (playnum === 1) {
 			if (player === true) {
 				if (randomNumber === 1) {
@@ -32,7 +33,7 @@ function App() {
 					setCurrentone(0);
 					setPlayer(false);
 				} else {
-					setCurrentone((prev) => prev + diceroll);
+					setCurrentone((prev) => prev + randomNumber);
 				}
 			}
 		}
@@ -43,13 +44,23 @@ function App() {
 					setPlayer(true);
 					setPlaynum(1);
 				} else {
-					setCurrenttwo((prev) => prev + diceroll);
+					setCurrenttwo((prev) => prev + randomNumber);
 				}
 			}
 		}
+		setDiceroll(randomNumber);
 	}
 	function onHold() {
-		checkwin();
+		if (playerone >= 100) {
+			setPlaywin(" Player One Wins");
+			setDisable(true);
+			return;
+		}
+		if (playertwo >= 100) {
+			setPlaywin("Player Two Wins");
+			setDisable(true);
+			return;
+		}
 		setPlaynum(playnum === 1 ? 2 : 1);
 		setPlayerone((prev) => prev + currentone);
 		setCurrentone(0);
@@ -62,7 +73,7 @@ function App() {
 		setPlayertwo(0);
 		setCurrentone(0);
 		setCurrenttwo(0);
-		setDiceroll(Math.floor(Math.random() * 6) + 1);
+		setDiceroll(0);
 		setPlayer(true);
 		setPlaynum(1);
 		setPlaywin("");
@@ -77,14 +88,14 @@ function App() {
 				<div className="row text-center">
 					<button
 						type="button"
-						className="btn btn-dark btn-lg col-4 ms-auto me-auto mt-5 mb-5"
+						className="btn btn-dark btn-lg col-xxl-4 col-xl-4 col-lg-4 col-md-5 col-sm-5 ms-auto me-auto mt-5 mb-5"
 						onClick={newgame}>
 						Start New game
 					</button>
 				</div>
 				<div className="row text-center">
 					<div
-						className="col-5 mt-auto mb-auto"
+						className="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-sm-10 mt-auto mb-auto"
 						style={{
 							border: "2px solid black",
 							backgroundColor: "lightblue",
@@ -95,7 +106,7 @@ function App() {
 						<h1 className="mt-5">Current</h1>
 						<h1 className="mb-3">{currentone}</h1>
 					</div>
-					<div className="col-2 fs-1 mt-5">
+					<div className="col-xxl-2 col-xl-2 col-lg-2 col-md-6 col-sm-6 fs-1 mt-5">
 						<img
 							src={"/" + diceroll + ".svg"}
 							height="75"
@@ -105,7 +116,7 @@ function App() {
 						<br />
 						<button
 							onClick={rollThedice}
-							className="btn btn-dark btn-lg"
+							className="btn btn-dark btn-lg mt-3"
 							disabled={disable}>
 							Roll The Dice
 						</button>
@@ -117,7 +128,7 @@ function App() {
 						</button>
 					</div>
 					<div
-						className="col-5 mt-auto mb-auto"
+						className="col-xxl-5 col-xl-5 col-lg-5 col-md-12 col-sm-10 mt-auto mb-auto"
 						style={{
 							border: "2px solid black",
 							backgroundColor: "lightgreen",
