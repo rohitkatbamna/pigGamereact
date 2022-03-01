@@ -12,11 +12,11 @@ function App() {
 	const [disable, setDisable] = useState(false);
 
 	function checkwin() {
-		if (playerone >= 10) {
+		if (playerone + currentone >= 10 || currentone >= 10) {
 			setPlaywin(" Player One Wins");
 			setDisable(true);
 		}
-		if (playertwo >= 10) {
+		if (playertwo + currenttwo >= 10 || currenttwo >= 10) {
 			setPlaywin("Player Two Wins");
 			setDisable(true);
 		}
