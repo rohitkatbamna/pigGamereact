@@ -8,16 +8,27 @@ function App() {
 	const [currentone, setCurrentone] = useState(0);
 	const [currenttwo, setCurrenttwo] = useState(0);
 	const [playnum, setPlaynum] = useState(1);
+	const [playwin, setPlaywin] = useState("");
+	const [disable, setDisable] = useState(false);
 	console.log(diceroll);
+
 	function rollThedice() {
+		if (playerone >= 10) {
+			setPlaywin(" Player One Wins");
+			setDisable(true);
+		}
+		if (playertwo >= 10) {
+			setPlaywin("Player Two Wins");
+			setDisable(true);
+		}
 		randomNumber = Math.floor(Math.random() * 6) + 1;
 		setDiceroll(randomNumber);
 		if (playnum === 1) {
 			if (player === true) {
 				if (randomNumber === 1) {
+					setPlaynum(2);
 					setCurrentone(0);
 					setPlayer(false);
-					setPlaynum(2);
 				} else {
 					setCurrentone((prev) => prev + diceroll);
 				}
@@ -36,6 +47,15 @@ function App() {
 		}
 	}
 	function onHold() {
+		if (playerone >= 10) {
+			setPlaywin(" Player One Wins");
+			setDisable(true);
+		}
+		if (playertwo >= 10) {
+			setPlaywin("Player Two Wins");
+			setDisable(true);
+		}
+		setPlaynum(playnum === 1 ? 2 : 1);
 		setPlayerone((prev) => prev + currentone);
 		setCurrentone(0);
 		setPlayertwo((prev) => prev + currenttwo);
@@ -76,10 +96,16 @@ function App() {
 							alt="Dice"
 						/>
 						<br />
-						<button onClick={rollThedice} className="btn btn-dark btn-lg">
+						<button
+							onClick={rollThedice}
+							className="btn btn-dark btn-lg"
+							disabled={disable}>
 							Roll The Dice
 						</button>
-						<button className="btn btn-dark btn-lg" onClick={onHold}>
+						<button
+							className="btn btn-dark btn-lg"
+							onClick={onHold}
+							disabled={disable}>
 							Hold
 						</button>
 					</div>
@@ -94,6 +120,11 @@ function App() {
 						<h1 style={{ fontSize: "50px" }}>{playertwo}</h1>
 						<h1 className="mt-5">Current</h1>
 						<h1 className="mb-3">{currenttwo}</h1>
+					</div>
+				</div>
+				<div className="row">
+					<div className="col-4 mt-5 ms-auto me-auto">
+						<p className="fs-1 fw-bold text-center">{playwin}</p>
 					</div>
 				</div>
 			</div>
