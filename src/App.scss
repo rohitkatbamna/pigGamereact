@@ -1,0 +1,30 @@
+.app_all_of_it {
+	margin: 2vw 1vw 2vw 1vw;
+	.app_row_one {
+		margin-bottom: 2vw;
+	}
+	.app_row_two {
+		display: grid;
+		grid-template-columns: 1fr 0.4fr 1fr;
+		align-items: center;
+		column-gap: 2vw;
+		.app_row_two_col_one {
+			text-align: center;
+		}
+		.app_row_two_col_two {
+			text-align: center;
+			.roll_the_dice {
+				margin-right: 1vw;
+			}
+		}
+		.app_row_two_col_three {
+			text-align: center;
+		}
+	}
+	@media only screen and (max-width: 500px) {
+		.app_row_two {
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr 1fr 1fr;
+		}
+	}
+}

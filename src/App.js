@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { gameActions } from "./redux";
+import "./App.scss";
 
 let randomNumber;
 function rngenerator() {
@@ -85,72 +86,69 @@ function App() {
 	}
 
 	return (
-		<>
-			<div className="container-fluid">
-				<div className="addmarginhere">
-					<div className="row">
-						<button
-							type="button"
-							className="btn btn-dark btn-lg col-4  mt-5 mb-5 ms-auto me-auto"
-							onClick={newgame}>
-							Start New game
-						</button>
-					</div>
-					<div className="row text-center ms-auto me-auto">
-						<div
-							className="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-5 mt-auto mb-auto ms-auto me-auto"
-							style={{
-								border: "2px solid black",
-								backgroundColor: "lightblue",
-								opacity: player ? 1 : 0.5,
-							}}>
-							<h1>Player 1</h1>
-							<h1 style={{ fontSize: "50px" }}>{playerone}</h1>
-							<h1 className="mt-5">Current</h1>
-							<h1 className="mb-3">{currentone}</h1>
-						</div>
-						<div className="col-xxl-2 col-xl-2 col-lg-2 col-md-3 col-sm-4 fs-1 mt-5 ms-auto me-auto">
-							<img
-								src={"/" + diceroll + ".svg"}
-								height="75"
-								width="75"
-								alt="Dice"
-							/>
-							<br />
-							<button
-								onClick={rollThedice}
-								className="btn btn-dark btn-lg mt-3"
-								disabled={disable}>
-								Roll The Dice
-							</button>
-							<button
-								className="btn btn-dark btn-lg mt-3"
-								onClick={onHold}
-								disabled={disable}>
-								Hold
-							</button>
-						</div>
-						<div
-							className="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-5 mt-auto mb-auto ms-auto me-auto"
-							style={{
-								border: "2px solid black",
-								backgroundColor: "lightgreen",
-								opacity: !player ? 1 : 0.5,
-							}}>
-							<h1>Player 2</h1>
-							<h1 style={{ fontSize: "50px" }}>{playertwo}</h1>
-							<h1 className="mt-5">Current</h1>
-							<h1 className="mb-3">{currenttwo}</h1>
-						</div>
-					</div>
-					<div className="row">
-						<div className="col-4 mt-5 ms-auto me-auto">
-							<p className="fs-1 fw-bold text-center">{playwin}</p>
-						</div>
-					</div>
+		<div className="app_all_of_it">
+			<div className="app_row_one text-center">
+				<button type="button" className="btn btn-dark btn-lg" onClick={newgame}>
+					Start New game
+				</button>
+			</div>
+			<div className="app_row_two">
+				<div
+					className="app_row_two_col_one"
+					style={{
+						border: "2px solid black",
+						backgroundColor: "lightblue",
+						opacity: player ? 1 : 0.5,
+					}}>
+					<h1>Player 1</h1>
+					<h1 style={{ fontSize: "50px" }}>{playerone}</h1>
+					<h1 className="mt-5">Current</h1>
+					<h1 className="mb-3">{currentone}</h1>
+				</div>
+				<div className="app_row_two_col_two">
+					{diceroll === 0 ? (
+						<p className="fs-1 fw-bold">Dice</p>
+					) : (
+						<img
+							src={"/" + diceroll + ".svg"}
+							height="75"
+							width="75"
+							alt="Dice"
+						/>
+					)}
+					<br />
+					<button
+						onClick={rollThedice}
+						className="btn btn-dark btn-lg mt-3 roll_the_dice"
+						disabled={disable}>
+						Roll The Dice
+					</button>
+					<button
+						className="btn btn-dark btn-lg mt-3"
+						onClick={onHold}
+						disabled={disable}>
+						Hold
+					</button>
+				</div>
+				<div
+					className="app_row_two_col_three"
+					style={{
+						border: "2px solid black",
+						backgroundColor: "lightgreen",
+						opacity: !player ? 1 : 0.5,
+					}}>
+					<h1>Player 2</h1>
+					<h1 style={{ fontSize: "50px" }}>{playertwo}</h1>
+					<h1 className="mt-5">Current</h1>
+					<h1 className="mb-3">{currenttwo}</h1>
 				</div>
 			</div>
-		</>
+			<div className="app_row_three">
+				<div className="app_row_three_col_one">
+					<p className="fs-1 fw-bold text-center">{playwin}</p>
+				</div>
+			</div>
+		</div>
 	);
 }
 

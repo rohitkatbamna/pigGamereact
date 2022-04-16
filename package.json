@@ -13,6 +13,8 @@
     "react-redux": "^7.2.8",
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
+    "sass": "^1.50.0",
+    "scss": "^0.2.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
