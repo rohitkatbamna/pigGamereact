@@ -1,83 +1,87 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { gameActions } from "./redux";
+
 let randomNumber;
 function rngenerator() {
 	randomNumber = Math.floor(Math.random() * 6) + 1;
 }
 function App() {
-	const [playerone, setPlayerone] = useState(0);
-	const [playertwo, setPlayertwo] = useState(0);
-	const [diceroll, setDiceroll] = useState(0);
-	const [player, setPlayer] = useState(true);
-	const [currentone, setCurrentone] = useState(0);
-	const [currenttwo, setCurrenttwo] = useState(0);
-	const [playnum, setPlaynum] = useState(1);
-	const [playwin, setPlaywin] = useState("");
-	const [disable, setDisable] = useState(false);
+	const dispatch = useDispatch();
+	const playerone = useSelector((state) => state.playerOne);
+	const playertwo = useSelector((state) => state.playerTwo);
+	const diceroll = useSelector((state) => state.diceroll);
+	const player = useSelector((state) => state.player);
+	const currentone = useSelector((state) => state.currentone);
+	const currenttwo = useSelector((state) => state.currenttwo);
+	const playnum = useSelector((state) => state.playnum);
+	const playwin = useSelector((state) => state.playwin);
+	const disable = useSelector((state) => state.disable);
 
 	function rollThedice() {
 		if (playerone >= 100) {
-			setPlaywin(" Player One Wins");
-			setDisable(true);
+			dispatch(gameActions.playerWinner("one"));
+			dispatch(gameActions.disableChange(true));
 			return;
 		}
 		if (playertwo >= 100) {
-			setPlaywin("Player Two Wins");
-			setDisable(true);
+			dispatch(gameActions.playerWinner("two"));
+			dispatch(gameActions.disableChange(true));
 			return;
 		}
 		rngenerator();
 		if (playnum === 1) {
 			if (player === true) {
 				if (randomNumber === 1) {
-					setPlaynum(2);
-					setCurrentone(0);
-					setPlayer(false);
+					dispatch(gameActions.setCurrentonevaluezero());
+					dispatch(gameActions.playerBool(false));
+					dispatch(gameActions.changePlayer(2));
 				} else {
-					setCurrentone((prev) => prev + randomNumber);
+					dispatch(gameActions.increaseCurrentonevalue(randomNumber));
 				}
 			}
 		}
 		if (playnum === 2) {
 			if (player === false) {
 				if (randomNumber === 1) {
-					setCurrenttwo(0);
-					setPlayer(true);
-					setPlaynum(1);
+					dispatch(gameActions.setCurrenttwovaluezero());
+					dispatch(gameActions.playerBool(true));
+					dispatch(gameActions.changePlayer(1));
 				} else {
-					setCurrenttwo((prev) => prev + randomNumber);
+					dispatch(gameActions.increaseCurrenttwovalue(randomNumber));
 				}
 			}
 		}
-		setDiceroll(randomNumber);
+		dispatch(gameActions.diceRollchange(randomNumber));
 	}
 	function onHold() {
 		if (playerone >= 100) {
-			setPlaywin(" Player One Wins");
-			setDisable(true);
+			dispatch(gameActions.playerWinner("one"));
+			dispatch(gameActions.disableChange(true));
 			return;
 		}
 		if (playertwo >= 100) {
-			setPlaywin("Player Two Wins");
-			setDisable(true);
+			dispatch(gameActions.playerWinner("two"));
+			dispatch(gameActions.disableChange(true));
 			return;
 		}
-		setPlaynum(playnum === 1 ? 2 : 1);
-		setPlayerone((prev) => prev + currentone);
-		setCurrentone(0);
-		setPlayertwo((prev) => prev + currenttwo);
-		setCurrenttwo(0);
-		setPlayer(player ? false : true);
+		dispatch(gameActions.changePlayer(playnum === 1 ? 2 : 1));
+		dispatch(gameActions.playerOnevaluechange(currentone));
+		dispatch(gameActions.setCurrentonevaluezero());
+		dispatch(gameActions.playerTwovaluechange(currenttwo));
+		dispatch(gameActions.setCurrenttwovaluezero());
+		dispatch(gameActions.playerBool(player ? false : true));
 	}
 	function newgame() {
-		setPlayerone(0);
-		setPlayertwo(0);
-		setCurrentone(0);
-		setCurrenttwo(0);
-		setDiceroll(0);
-		setPlayer(true);
-		setPlaynum(1);
-		setPlaywin("");
-		setDisable(false);
+		dispatch(gameActions.playerOnevaluezero());
+		dispatch(gameActions.playerTwovaluezero());
+		dispatch(gameActions.setCurrentonevaluezero());
+		dispatch(gameActions.setCurrenttwovaluezero());
+		dispatch(gameActions.diceRollchange(0));
+		dispatch(gameActions.playerBool(true));
+		dispatch(gameActions.changePlayer(1));
+		dispatch(gameActions.playerWinner(""));
+		dispatch(gameActions.disableChange(false));
 	}
 
 	return (
