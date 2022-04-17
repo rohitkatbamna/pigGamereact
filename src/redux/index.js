@@ -24,7 +24,7 @@ export const gameSlice = createSlice({
 			state.currentone = 0;
 		},
 		increaseCurrenttwovalue(state, action) {
-			state.currenttwo = state.currentone + action.payload;
+			state.currenttwo = state.currenttwo + action.payload;
 		},
 		setCurrenttwovaluezero(state) {
 			state.currenttwo = 0;
